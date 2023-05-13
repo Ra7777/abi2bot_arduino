@@ -18,6 +18,7 @@ class Wheel
     double steer_vel = 0;
     double trac_pos = 0;
     double trac_vel = 0;
+    double vel = 0;
     double rads_per_count = 0;
 
     Wheel() = default;
