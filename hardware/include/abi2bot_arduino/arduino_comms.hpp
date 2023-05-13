@@ -86,7 +86,7 @@ public:
 
   void read_encoder_values(int &val_1, double &val_2, double &val_3)
   {
-    std::string response = send_msg("e\r");
+    std::string response = send_msg("$306 ;");
 
     std::string delimiter = " ";
     size_t del_pos = response.find(delimiter);
@@ -102,7 +102,8 @@ public:
   void set_motor_values(double val_1, double val_2)
   {
     std::stringstream ss;
-    ss << "m " << val_1 << " " << val_2 << "\r";
+    ss << "$1 " << val_2 << " ;";
+    ss << "$2 " << val_1 << " ;";
     send_msg(ss.str());
   }
 
