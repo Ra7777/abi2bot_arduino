@@ -101,10 +101,12 @@ public:
   }
   void set_motor_values(double val_1, double val_2)
   {
-    std::stringstream ss;
-    ss << "$1 " << val_2 << ";";
-    ss << "$2 " << val_1 << ";";
-    send_msg(ss.str());
+    std::stringstream ss1;
+    std::stringstream ss2;
+    ss1 << "$1 " << val_2 << ";";
+    send_msg(ss1.str());
+    ss2 << "$2 " << val_1 << ";";
+    send_msg(ss2.str());
   }
 
   void set_pid_values(int k_p, int k_d, int k_i, int k_o)
