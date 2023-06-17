@@ -207,12 +207,17 @@ hardware_interface::return_type Abi2BotArduinoHardware::read(
   comms_.read_encoder_values(wheel_.enc, wheel_.vel, wheel_.trac_pos);
 
   double delta_seconds = period.seconds();
+  //wheel_.steer_pos = wheel_.enc/57.2958;
+  wheel_.steer_pos = wheel_.enc*0.001570796;
+  std::cerr << "TEST: " << wheel_.steer_pos << std::endl;
 
-  double pos_prev = wheel_.steer_pos;
-  wheel_.steer_pos = wheel_.calc_enc_angle();
-  wheel_.steer_vel = (wheel_.steer_pos - pos_prev) / delta_seconds;
+  //double pos_prev = wheel_.steer_pos;
+  //wheel_.steer_pos = wheel_.calc_enc_angle();
+  //wheel_.steer_vel = (wheel_.steer_pos - pos_prev) / delta_seconds;
 
-  wheel_.trac_vel = (5*wheel_.vel-570)*0.1047;
+  //wheel_.trac_vel = (5*wheel_.vel-570)*0.1047;
+  wheel_.trac_vel = wheel_.vel;
+
 
   //pos_prev = wheel_r_.pos;
   //wheel_r_.pos = wheel_r_.calc_enc_angle();
@@ -231,8 +236,8 @@ hardware_interface::return_type abi2bot_arduino ::Abi2BotArduinoHardware::write(
 
   //int motor_l_counts_per_loop = wheel_l_.cmd / wheel_l_.rads_per_count / cfg_.loop_rate;
   //int motor_r_counts_per_loop = wheel_r_.cmd / wheel_r_.rads_per_count / cfg_.loop_rate;
-  double trac = wheel_.trac_cmd/0.5235 + 114;
-  comms_.set_motor_values(wheel_.steer_cmd, trac);
+  double trac = wheel_.trac_cmd*9.5492968;
+  comms_.set_motor_values(wheel_.steer_cmd*57.2958, trac);
   return hardware_interface::return_type::OK;
 }
 
