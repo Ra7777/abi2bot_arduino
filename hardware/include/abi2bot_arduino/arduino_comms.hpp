@@ -56,6 +56,7 @@ public:
 
   std::string send_msg(const std::string &msg_to_send, bool print_output = false)
   {
+    //std::cerr << "Sent_test: " << msg_to_send << std::endl;
     serial_conn_.FlushIOBuffers(); // Just in case
     serial_conn_.Write(msg_to_send);
 
@@ -72,7 +73,7 @@ public:
 
     if (print_output)
     {
-      std::cout << "Sent: " << msg_to_send << " Recv: " << response << std::endl;
+        std::cout << "Sent: " << msg_to_send << " Recv: " << response << std::endl;
     }
 
     return response;
@@ -84,9 +85,11 @@ public:
     std::string response = send_msg("\r");
   }
 
-  void read_encoder_values(int &val_1, double &val_2, double &val_3)
+  void read_encoder_values(double &val_1, double &val_2, double &val_3)
   {
-    std::string response = send_msg("$306;");
+    std::stringstream ss;
+    ss << "$" << 306 << ";";
+    std::string response = send_msg(ss.str(), true);
 
     std::string delimiter = " ";
     size_t del_pos = response.find(delimiter);
@@ -104,9 +107,9 @@ public:
     std::stringstream ss1;
     std::stringstream ss2;
     ss1 << "$1 " << val_2 << ";";
-    send_msg(ss1.str());
+    send_msg(ss1.str(), true);
     ss2 << "$2 " << val_1 << ";";
-    send_msg(ss2.str());
+    send_msg(ss2.str(), true);
   }
 
   void set_pid_values(int k_p, int k_d, int k_i, int k_o)
