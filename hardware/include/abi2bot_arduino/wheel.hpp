@@ -11,7 +11,7 @@ class Wheel
 
     std::string steer_name = "";
     std::string trac_name = "";
-    int enc = 0;
+    double enc = 0;
     double steer_cmd = 0;
     double trac_cmd = 0;
     double steer_pos = 0;
